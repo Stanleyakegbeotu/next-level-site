@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thank You for Your Order</title>
+    <style>
+        /* --- DESIGN VARIABLES (LIGHT MODE) --- */
+        :root {
+            --background: 30 40% 97%;
+            --foreground: 220 40% 12%;
+            --card: 0 0% 100%;
+            --card-foreground: 220 40% 12%;
+            --primary: 12 88% 59%; /* Orange/Red */
+            --primary-foreground: 0 0% 100%;
+            --secondary: 174 72% 46%; /* Teal/Green */
+            --secondary-foreground: 0 0% 100%;
+            --muted: 30 20% 90%;
+            --muted-foreground: 220 20% 40%;
+            --accent: 45 100% 51%; /* Yellow/Gold */
+            --accent-foreground: 220 40% 12%;
+            --border: 30 30% 88%;
+            --input: 30 30% 88%;
+            --ring: 12 88% 59%;
+            --radius: 0.75rem;
+
+            /* Gradients */
+            --gradient-primary: linear-gradient(135deg, hsl(12 88% 59%), hsl(174 72% 46%));
+            --gradient-cta: linear-gradient(135deg, hsl(12 88% 59%), hsl(25 95% 53%), hsl(45 100% 51%));
+            --gradient-bg: linear-gradient(180deg, hsl(30 40% 97%), hsl(174 40% 95%));
+            
+            /* Shadows & Transitions */
+            --shadow-premium: 0 10px 40px -10px hsl(12 88% 59% / 0.4);
+            --shadow-card: 0 4px 20px hsl(220 40% 12% / 0.08);
+            --shadow-glow: 0 0 30px hsl(12 88% 59% / 0.3);
+            --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* DARK MODE OVERRIDES */
+        .dark {
+            --background: 220 40% 12%;
+            --foreground: 30 40% 97%;
+            --card: 220 35% 16%;
+            --card-foreground: 30 40% 97%;
+            --muted: 220 30% 20%;
+            --muted-foreground: 220 20% 65%;
+            --border: 220 30% 20%;
+            --input: 220 30% 20%;
+            
+            /* Dark Mode Gradients/Shadows */
+            --gradient-bg: linear-gradient(180deg, hsl(220 40% 12%), hsl(220 35% 16%));
+            --shadow-premium: 0 10px 40px -10px hsl(12 88% 59% / 0.5);
+            --shadow-card: 0 4px 20px hsl(0 0% 0% / 0.3);
+            --shadow-glow: 0 0 40px hsl(12 88% 59% / 0.4);
+        }
+
+        /* GLOBAL BASE STYLES */
+        * { box-sizing: border-box; border-color: hsl(var(--border)); line-height: 1.5; }
+        html, body { height: 100%; }
+        body {
+            background-color: hsl(var(--background));
+            color: hsl(var(--foreground));
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background: var(--gradient-bg);
+            background-size: 100% 200%;
+            animation: gradient-shift 15s ease infinite;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* UTILITIES */
+        .container { max-width: 48rem; margin: auto; padding: 1rem; text-align: center; }
+        
+        /* CTA Button Styling (from .btn-gradient) */
+        .btn-gradient {
+            background: var(--gradient-cta);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 0.75rem;
+            font-weight: 700;
+            font-size: 1.125rem;
+            transition: var(--transition-smooth);
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            box-shadow: 0 4px 15px -5px hsl(var(--primary) / 0.5);
+        }
+
+        .btn-gradient:hover {
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: var(--shadow-premium);
+            animation: pulse-glow 2s ease-in-out infinite;
+        }
+
+        /* Premium Card Styling (from .card-premium) */
+        .card-premium {
+            background-color: hsl(var(--card));
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-card);
+            border: 1px solid hsl(var(--border));
+            transition: var(--transition-smooth);
+            padding: 1.5rem;
+        }
+
+        /* --- 3D TILT BUTTON (Manager's Office) --- */
+        #manager-office-btn {
+            background: linear-gradient(135deg, hsl(45 100% 51%), hsl(12 88% 59%));
+            color: hsl(var(--card));
+            font-size: 2rem;
+            font-weight: 900;
+            padding: 2rem 1rem;
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+            perspective: 1000px;
+            transform-style: preserve-3d;
+            box-shadow: 0 15px 50px -10px hsl(45 100% 51% / 0.7);
+            transition: all 0.4s ease;
+        }
+
+        #manager-office-btn:hover {
+            transform: rotateX(5deg) rotateY(5deg) scale(1.05);
+            box-shadow: 0 25px 80px -15px hsl(45 100% 51% / 0.9);
+        }
+
+        /* UTILITIES */
+        .text-6xl { font-size: 3.75rem; }
+        .text-3xl { font-size: 1.875rem; }
+        .text-primary { color: hsl(var(--primary)); }
+        .text-secondary { color: hsl(var(--secondary)); }
+        .space-y-4 > * + * { margin-top: 1rem; }
+        .space-y-8 > * + * { margin-top: 2rem; }
+
+        /* ANIMATIONS */
+        @keyframes gradient-shift {
+            0%, 100% { background-position: 0% 0%; }
+            50% { background-position: 0% 100%; }
+        }
+
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: var(--shadow-glow); }
+            50% { box-shadow: 0 0 50px hsl(12 88% 59% / 0.5); }
+        }
+    </style>
+</head>
+<body class="bg-background text-foreground">
+
+    <div id="theme-toggle" style="position: fixed; top: 1rem; right: 1rem; z-index: 60;">
+        <button id="theme-btn" class="card-premium p-2" style="border-radius: 9999px;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6 text-accent"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="M4.93 4.93l1.41 1.41"/><path d="M17.66 17.66l1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="M4.93 19.07l1.41-1.41"/><path d="M17.66 6.34l1.41-1.41"/></svg>
+        </button>
+    </div>
+
+    <div class="container card-premium" style="max-width: 600px;">
+        <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="hsl(var(--secondary))" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom: 1rem;"><polyline points="20 6 9 17 4 12"/></svg>
+        <h1 class="text-6xl font-bold text-primary" style="margin: 0;">Order Confirmed!</h1>
+        <p class="text-3xl text-secondary" style="margin-top: 0.5rem;">Thank you for choosing the Mini Body Massager.</p>
+
+        <div class="space-y-4" style="margin-top: 2rem;">
+            <p class="text-lg font-bold">What Happens Next?</p>
+            <p class="text-lg">
+                Your order is currently being processed. You will receive a call within **12 hours** to confirm your details. 
+                <br>Delivery is guaranteed within **2-3 business days** nationwide.
+            </p>
+            
+            <hr style="border-color: hsl(var(--border)); margin: 2rem 0;">
+
+            <a href="product-sales.html" class="btn-gradient" style="margin-bottom: 2rem;">Continue Shopping</a>
+
+            <h3 class="text-3xl font-bold" style="margin-top: 2rem;">Discover More Products</h3>
+            <a href="dashboard.html" id="manager-office-btn" class="card-premium">
+                MANAGER'S OFFICE
+            </a>
+            <p style="font-size: 0.875rem; color: hsl(var(--muted-foreground)); margin-top: 0.5rem;">Explore exclusive deals and other premium products.</p>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const body = document.body;
+            const themeBtn = document.getElementById('theme-btn');
+
+            themeBtn.addEventListener('click', () => {
+                body.classList.toggle('dark');
+                localStorage.setItem('theme', body.classList.contains('dark') ? 'dark' : 'light');
+            });
+
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                body.classList.add('dark');
+            }
+        });
+    </script>
+</body>
+</html>
